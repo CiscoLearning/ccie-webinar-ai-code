@@ -2,7 +2,7 @@
 
 ## Current Demo Environment
 
-- **CML Lab**: bgp-demo
+- **CML Lab**: bgp-demo (note: ID in `inventories/cml/group_vars/all.yml`.  If cached lab is not found in CML, create a new one.)
 - **Baseline State**:
   - R1 (AS 65001) ↔ R2 (AS 65002): eBGP Established (direct peering over Gi0/1)
   - R3 (AS 65003): Prepared, no BGP configured yet
@@ -10,7 +10,6 @@
   - Demo Task: Add R3 with eBGP multihop to R1
 - **Inventory**: `inventories/cml/hosts.yml`
 - **Environment Name**: `cml`
-- **Lab Running in CML**: Found in `inventories/cml/group_vars/all.yml`.  If cached lab is not found in CML, create a new one.
 
 ---
 
