@@ -81,21 +81,24 @@ feature/bgp-r1-r2-peering
 └── Commit 7: docs(readme): update with BGP deployment instructions
 ```
 
-#### Phase 3: Pull Request and Human Review
+#### Phase 3: Test in CML Before PR Merge
 1. **Push branch** to remote repository
 2. **Create Pull Request** using `create_pull_request` skill
-3. **Provide context** in PR description:
-   - What problem does this solve?
-   - What changes were made?
-   - How was it tested?
-   - What should the reviewer focus on?
-4. **Pause for human review** - explicitly state: "PR created, awaiting your review"
-5. **Address feedback** if requested, using additional commits on the same branch
+3. **Provide context** in PR description
+4. **Deploy from feature branch to CML** - test before merging
+5. **Validate via CML MCP** - verify configuration works
+6. **Report validation results** in PR comment
+7. **If validation passes**: "✅ CML validation successful. PR ready for human review and merge."
+8. **If validation fails**: Fix issues, commit to same branch, retry validation
+9. **Pause for human review** - only after successful CML validation
+10. **Address feedback** if requested, using additional commits on the same branch
 
-#### Phase 4: Post-Merge
-1. **Return to main branch** after PR is merged
-2. **Pull latest changes** before starting next task
-3. **Reference git history** to understand what's been implemented
+#### Phase 4: Merge Only After Validation
+1. **Human reviews validated code** in PR
+2. **Human approves and merges** PR to main
+3. **Main branch always contains CML-validated code**
+4. **Return to main branch** after merge
+5. **Pull latest changes**
 
 ### Available Resources
 - **MCP Server**: CML integration for topology access and validation

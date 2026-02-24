@@ -566,6 +566,69 @@ Agent verification:
 
 ---
 
+## Skill: cml_validation_workflow
+**Description**: Complete workflow for testing configuration changes in CML before PR merge
+
+**Parameters:**
+- `feature_branch` (string): Current feature branch name
+- `target_devices` (list): Devices to deploy to
+- `validation_checks` (list): What to validate
+
+**Workflow:**
+1. **Ensure on feature branch** (not main)
+2. **Deploy to CML** from feature branch
+3. **Run validation** via CML MCP
+4. **Collect results**
+5. **Comment on PR** with results
+6. **If passed**: Mark PR ready for review
+7. **If failed**: Report error, await fix, retry
+
+**Example Execution:**
+```bash
+# Deploy from feature branch
+git checkout feature/bgp-r3-multihop
+ansible-playbook -i inventories/cml/hosts.yml playbooks/deploy_bgp.yml --limit R1,R3
+
+# Validate via MCP
+# [MCP validation commands]
+
+# Report to PR
+gh pr comment <PR_NUMBER> --body "✅ CML Validation Passed
+- BGP sessions: Established
+- Routes: Correct
+- Ready for review"
+```
+
+**Success Response:**
+```
+✅ CML Validation Complete
+
+Deployment Results:
+- R1: Configuration applied successfully
+- R3: Configuration applied successfully
+
+Validation Results:
+- R1 ↔ R3 BGP: Established
+- R1 received prefix: 10.3.3.0/24
+- R3 received prefix: 10.1.1.0/24
+- Timers: 30/90 (as specified)
+
+PR #42 is validated and ready for human review. Please approve and merge when ready.
+
+⚠️  Do not merge until you have reviewed the changes.
+```
+
+**Failure Response:**
+```
+❌ CML Validation Failed
+
+Error: [detailed error message]
+
+I'll investigate and fix this issue in the feature branch before requesting review.
+```
+
+---
+
 ## Inventory Skills
 
 ### Skill: ansible_inventory_from_cml
