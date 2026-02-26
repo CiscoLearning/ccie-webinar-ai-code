@@ -148,6 +148,26 @@ Create a 3-router BGP topology:
 - Document the test-before-merge workflow for future features
 ```
 
+## Run a Demo
+
+If you want to see how the GitOps flow with agentic AI assistance works, try this prompt within this repository.  This should add new BGP config to R3, ensure they work by testing them in Cisco Modeling Labs, and then review those changes via a GitHub pull request (PR) before they are merged into the main branch:
+
+```text
+Add R3 (AS 65003, router-id 3.3.3.3) to our BGP deployment. R3 needs to peer 
+with R1 (1.1.1.1) but they are not directly connected - R3 reaches R1 via R2. 
+Use eBGP multihop with TTL of 2. R3 should advertise 10.3.3.0/24.
+
+Follow our Git workflow:
+1. Create a feature branch and make incremental commits
+2. Create a PR with detailed description
+3. Deploy from the feature branch to CML for testing
+4. Validate the configuration using CML MCP
+5. Only after successful validation, mark the PR as ready for my review
+6. Wait for my approval before merging
+
+Important: Do NOT merge the PR until CML validation passes and I approve.
+```
+
 ## Repository Structure
 
 ```text
