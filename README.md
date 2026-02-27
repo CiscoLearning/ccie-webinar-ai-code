@@ -148,6 +148,31 @@ Create a 3-router BGP topology:
 - Document the test-before-merge workflow for future features
 ```
 
+## Integrate CML
+
+This demo relies on having the [CML Model Context Protocol (MCP) server](https://github.com/xorrkaz/cml-mcp) integrated with the repo.  You can do this by folding in the following settings to `.vscode/mcp.json`:
+
+```json
+{
+    "servers": {
+        "Cisco Modeling Labs (CML)": {
+             "type": "stdio",
+             "command": "uvx",
+             "args": ["cml-mcp[pyats]"],
+             "env": {
+                 "NODE_TLS_REJECT_UNAUTHORIZED": "0",
+                 "CML_URL": "https://192.0.2.2",
+                 "CML_USERNAME": "USERNAME",
+                 "CML_PASSWORD": "PASSWORD",
+                 "PYATS_USERNAME": "DEV_USERNAME",
+                 "PYATS_PASSWORD": "DEV_PASSWORD",
+                 "PYATS_AUTH_PASS": "DEV_ENABLE"
+             }
+        }
+    }
+}
+```
+
 ## Run a Demo
 
 If you want to see how the GitOps flow with agentic AI assistance works, try this prompt within this repository.  This should add new BGP config to R3, ensure they work by testing them in Cisco Modeling Labs, and then review those changes via a GitHub pull request (PR) before they are merged into the main branch:
